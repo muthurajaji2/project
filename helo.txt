@@ -1,3 +1,100 @@
-Hello, VS Code Git!
+🟢 ✅ 1️⃣ Update Your System
+Always start by updating packages:
 
-hi 2nd one  yes 
+
+sudo apt update
+sudo apt upgrade -y
+🟢 ✅ 2️⃣ Install Java
+Jenkins needs Java (usually OpenJDK 11 or 17).
+
+Install OpenJDK 17 (recommended):
+
+
+sudo apt install openjdk-17-jdk -y
+✅ Verify Java is installed:
+
+
+java -version
+Example output:
+
+
+openjdk version "17.0.x"
+🟢 ✅ 3️⃣ Add Jenkins Repository
+First, install dependencies:
+
+
+sudo apt install gnupg2 wget -y
+Then import Jenkins GPG key:
+
+
+wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+Add the Jenkins repository:
+
+
+sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+🟢 ✅ 4️⃣ Update Packages Again
+
+sudo apt update
+🟢 ✅ 5️⃣ Install Jenkins
+
+sudo apt install jenkins -y
+🟢 ✅ 6️⃣ Start and Enable Jenkins Service
+Start Jenkins:
+
+
+sudo systemctl start jenkins
+Enable it to start on boot:
+
+
+sudo systemctl enable jenkins
+✅ Check Jenkins status:
+
+
+sudo systemctl status jenkins
+You should see active (running).
+
+🟢 ✅ 7️⃣ Open Firewall Port 8080
+If using UFW firewall, allow port 8080:
+
+
+sudo ufw allow 8080
+sudo ufw reload
+🟢 ✅ 8️⃣ Access Jenkins Web UI
+Open your browser:
+
+
+http://<EC2_PUBLIC_IP>:8080
+Example:
+
+
+http://13.234.111.222:8080
+🟢 ✅ 9️⃣ Unlock Jenkins
+The first time you access Jenkins, it asks for an Administrator Password.
+
+Get it with:
+
+
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+Copy the password shown and paste it into the web UI.
+
+✅ Done! You’ve installed Jenkins.
+
+🟢 Quick Recap of Commands
+Here’s everything in one copy-paste block:
+
+
+sudo apt update
+sudo apt upgrade -y
+sudo apt install openjdk-17-jdk -y
+java -version
+sudo apt install gnupg2 wget -y
+wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+sudo apt update
+sudo apt install jenkins -y
+sudo systemctl start jenkins
+sudo systemctl enable jenkins
+sudo systemctl status jenkins
+sudo ufw allow 8080
+sudo ufw reload
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
